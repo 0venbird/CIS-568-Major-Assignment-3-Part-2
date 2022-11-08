@@ -27,7 +27,7 @@ function simulate(data,svg)
         .force("charge", d3.forceManyBody())
         //.force("link",d3.forceLink(data.links)) // we add links data to this layout
         .force("link",d3.forceLink(data.links)
-            .id(d=>d.index)
+            .id(d=>d.id)
             .distance(d=>d.value)
             .strength(d=>d.value*.1)
         )

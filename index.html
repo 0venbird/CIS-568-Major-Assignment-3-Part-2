@@ -2,8 +2,9 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
+    <link rel="stylesheet" href="style.css">
     <script src="https://d3js.org/d3.v7.min.js"></script>
-    <script src="network.js"></script>
+    <script src="./libs/network.js"></script>
     <style>
         circle{
             fill-opacity: .9;
@@ -17,7 +18,7 @@
 </head>
 <body>
 <script>
-    d3.json("publication_network.json").then( (data)=>{
+    d3.json("publication_network_index.json").then( (data)=>{
         let svg = d3.select('body').append("svg").attr("viewBox","0 0 1000 800")
         simulate(data,svg)
     })
