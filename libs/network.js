@@ -19,11 +19,15 @@ function simulate(data, svg) {
     })
 
     let scale_radius = d3
-        .scaleLinear()
-        .domain(d3.extent(Object.values(node_degree)))
-        .range([5, 15])
+        .scaleSqrt()
+        .domain(d3.extent(data.nodes, d=> {
+            //console.log(d.Citations)
+            return d.Citations
+        }))
+        //.domain(d3.extent(Object.values(node_degree)))
+        .range([5, 30])
 
-    let color = d3.scaleOrdinal(d3.schemeCategory10)
+    let color = d3.scaleSequential().domain([1995, 2020]).interpolator(d3.interpolateBuGn)
     let link_elements = main_group
         .append('g')
         .attr('transform', `translate(${width / 2},${height / 2})`)
@@ -47,10 +51,11 @@ function simulate(data, svg) {
             // console.log(i,d,node_degree)
             return scale_radius(node_degree[d.id])
         })
-        .attr('fill', (d, i) => color(d.group))
+        .attr('fill', (d, i) => color(d.Year))
         .on("mouseenter",function (d,data){
+            //console.log(data.year)
             node_elements.classed("inactive",true)
-            d3.selectAll(".gr_"+data.group.toString()).classed("inactive",false)
+            d3.selectAll(".gr_"+data.Group).classed("inactive",false)
         })
         .on("mouseleave", (d,data)=>{
             d3.selectAll(".inactive").classed("inactive",false)
